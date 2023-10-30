@@ -1,0 +1,13 @@
+---
+- name: Install NGINX
+  hosts: all
+  become: true
+  gather_facts: true
+
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks:
+
+  - name: Example from an Ansible Playbook
+    ansible.builtin.ping:

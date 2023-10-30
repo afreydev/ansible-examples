@@ -1,0 +1,5 @@
+---
+nginx_version: 1.18.0-6ubuntu14.4
+custom_directory: /var/www/default
+default_index: False
+custom_message: "This is a custom message"

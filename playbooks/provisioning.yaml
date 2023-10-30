@@ -1,0 +1,41 @@
+---
+- name: Provision docker server
+  hosts: all
+  strategy: free
+  gather_facts: true
+  become: true
+
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks:  
+  - name: Copy directory to remote host
+    copy:
+      src: "{{ playbook_dir }}/../app/"
+      dest: "/opt/app/"
+  - name: Install docker packages
+    apt:
+      name: ['apt-transport-https','ca-certificates', 'curl', 'software-properties-common']
+      state: present
+      update_cache: yes
+  - name: Add Docker s GPG key for ubuntu from official site
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+  - name: Configure Docker for ubuntu stable repository
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable
+      state: present
+      update_cache: yes
+  - name: Update apt packages
+    apt:
+      update_cache: yes
+  - name: Install docker-ce
+    apt:
+      name: docker-ce
+      state: present
+      update_cache: yes
+  - name: Build docker image
+    ansible.builtin.command:
+      cmd: docker compose up -d
+      chdir: /opt/app

@@ -1,0 +1,14 @@
+---
+- name: Provision nginx using role
+  hosts: all
+  strategy: free
+  gather_facts: true
+  become: true
+  roles:
+  - role: "roles/nginx"
+    vars:
+      custom_message: "This is the best custom message"
+      default_index: True
+
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'

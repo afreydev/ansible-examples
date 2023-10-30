@@ -1,0 +1,21 @@
+---
+- name: Create Users
+  hosts: all
+  gather_facts: no
+  vars:
+    users: "{{ lookup('file', '../users.yaml') | from_yaml }}"
+  become: true
+
+  tasks:
+  
+    - name: Display the Value of user_dict
+      debug:
+        var: user_dict
+
+    - name: Create Users
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        shell: /bin/bash
+        groups: "sudo"
+        append: yes
+      with_items: "{{ users.users }}"

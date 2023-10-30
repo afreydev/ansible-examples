@@ -1,0 +1,4 @@
+---
+# vars file for webserver
+custom_directory: /home/vagrant/nginx
+custom_message: "This is a monadical message"
