@@ -1,0 +1,17 @@
+- hosts: localhost
+  vars:
+    foo_var: "this is a default value"
+  tasks:
+
+     - name: Run echo
+       ansible.builtin.command: echo "hello"
+       register: echo_result
+       ignore_errors: true
+
+     - name: Print return information from the previous task
+       ansible.builtin.debug:
+        var: echo_result
+
+     - name: Run echo again
+       ansible.builtin.command: echo "I got {{ foo_var }}"
+       when: echo_result.stdout == "hello"
