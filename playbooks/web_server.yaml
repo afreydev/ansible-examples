@@ -8,7 +8,7 @@
   - role: "roles/nginx"
     vars:
       custom_message: "This is the best custom message"
-      default_index: True
+      default_index: False
 
   vars:
     ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
